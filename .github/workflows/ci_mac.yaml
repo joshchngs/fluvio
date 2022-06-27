@@ -248,6 +248,11 @@ jobs:
           fluvio cluster start --local --develop --skip-checks --log-dir "${log_dir}" 2> >(tee $stderr >&2)
           [ $? -eq 0 ] && { echo "Expected nonzero exit code, got $?"; exit 2; }
           grep -qF "${log_dir}" $stderr || { echo "Expected to find '${log_dir}' in stderr"; exit 3; }
+      - name: Start local fluvio cluster with default --log-dir
+        timeout-minutes: 5
+        run: |
+          echo "Starting cluster with default '--log-dir'"
+          fluvio cluster start --local --develop --skip-checks
 
  # same as in ci.yaml except no aa64
   build_image:
